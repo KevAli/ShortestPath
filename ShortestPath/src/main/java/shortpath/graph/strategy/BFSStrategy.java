@@ -21,7 +21,7 @@ public class BFSStrategy extends Strategy {
         }
         Vertex beginVertex = vertexList.get(0);
         for (Vertex vertex : vertexList) {
-            if (vertex.getName() == "BOSTON") {
+            if (vertex.getName().equals("BOSTON")) {
                 beginVertex = vertex;
             }
         }
@@ -76,9 +76,9 @@ public class BFSStrategy extends Strategy {
                 }
             }
         }
-        for (List<String> list : routeList) {
-            System.out.println(list);
-        }
+//        for (List<String> list : routeList) {
+//            System.out.println(list);
+//        }
         return routeList;
     }
 }

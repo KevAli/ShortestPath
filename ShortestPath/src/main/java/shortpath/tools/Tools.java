@@ -26,6 +26,21 @@ public class Tools {
     }
 
     /**
+     * writer
+     * @param textPath
+     * @param text
+     */
+    public static void textWrite(String textPath, String text) {
+        try {
+            FileWriter fw = new FileWriter(textPath);
+            fw.write(text);
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * read Edge Message from filePath
      *
      * @param filePath

@@ -31,9 +31,9 @@ public class DFSStrategy extends Strategy {
                 DFS(vertexList, vertexList.get(i));
             }
         }
-        for (List<String> list : routeList) {
-            System.out.println(list);
-        }
+//        for (List<String> list : routeList) {
+//            System.out.println(list);
+//        }
         return routeList;
     }
 

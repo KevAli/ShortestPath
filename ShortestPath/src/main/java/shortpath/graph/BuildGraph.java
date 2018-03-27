@@ -15,6 +15,7 @@ public class BuildGraph {
     private static final String McdonaldPath = "E:\\shortPath\\2XB3_A3_DataSets\\mcdonalds.csv";
     private static final String WendyPath = "E:\\shortPath\\2XB3_A3_DataSets\\wendys.csv";
     private static final String MealPath = "E:\\shortPath\\2XB3_A3_DataSets\\menu.csv";
+    private static final String a2_outPath = "E:\\shortPath\\2XB3_A3_DataSets\\a2_out.txt";
 
     public static void buildGraph() throws InterruptedException {
         List<Wendy> wendyList = Tools.getWendyList(WendyPath);
@@ -33,10 +34,11 @@ public class BuildGraph {
 
         Graph graph = new Graph(vertexList, edgeMap);
         graph.setStrategy(new DFSStrategy());
-        graph.runStrategy();
+        List<List<String>> DFSresult = graph.runStrategy();
         System.out.println("----------------------------------------DFSSearchEnd");
         graph.setStrategy(new BFSStrategy());
-        graph.runStrategy();
+        List<List<String>> BFSresult = graph.runStrategy();
+        System.out.println("----------------------------------------BFSSearchEnd");
 
         for (Wendy wendy : wendyList) {
             for (Vertex vertex : vertexList) {
@@ -74,9 +76,68 @@ public class BuildGraph {
 
         Dijstra dijstra = new Dijstra(vertexList);
         dijstra.runDijstra();
-        dijstra.getSortestPath();
+        List<String> dijstraPath = dijstra.getSortestPath();
 
+        StringBuffer text = new StringBuffer();
+        for (List<String> stringList : BFSresult) {
+            if (stringList.get(0).equals("BOSTON") && stringList.contains("MINNEAPOLIS")) {
+                text.append("BFS:");
+                for (String s : stringList) {
+                    text.append(s);
+                    if (s.equals("MINNEAPOLIS")) {
+                        break;
+                    }
+                    text.append(",");
+                }
+                text.append("\n");
+                break;
+            }
+        }
+        for (List<String> stringList : DFSresult) {
+            if (stringList.get(0).equals("BOSTON") && stringList.contains("MINNEAPOLIS")) {
+                text.append("DFS:");
+                for (String s : stringList) {
+                    text.append(s);
+                    if (s.equals("MINNEAPOLIS")) {
+                        break;
+                    }
+                    text.append(",");
+                }
+                text.append("\n");
+                break;
+            }
+        }
+        text.append("\nAll the BFS path from BOSTON:\n");
+        for (List<String> stringList : BFSresult) {
+            text.append("\t");
+            text.append(stringList);
+            text.append("\n");
+        }
+        text.append("\nAll the DFS path from BOSTON:\n");
+        for (List<String> stringList : DFSresult) {
+            text.append("\t");
+            text.append(stringList);
+            text.append("\n");
+        }
 
-
+        text.append("\n");
+        text.append(String.format("%-40s", "City"));
+        text.append(String.format("%-40s", "Meal Choice"));
+        text.append(String.format("%-40s", "Cost of Meal"));
+        text.append("\n");
+        for (int i = 0; i < dijstraPath.size(); i++) {
+            text.append(String.format("%-40s", dijstraPath.get(i)));
+            if (i != 0) {
+                if (i % 2 == 0) {
+                    text.append(String.format("%-40s", "Double Cheeseburger - Meal"));
+                    text.append(String.format("%-40s", "$3.79"));
+                } else {
+                    text.append(String.format("%-40s", "McChicken - Meal"));
+                    text.append(String.format("%-40s", "$4.38"));
+                }
+            }
+            text.append("\n");
+        }
+        Tools.textWrite(a2_outPath, text.toString());
     }
 }

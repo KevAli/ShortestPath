@@ -1,9 +1,12 @@
 package shortpath.graph;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Data
 public class Dijstra {
     private List<Vertex> vertexList;
     private int[][] pathMatrix;
@@ -11,6 +14,7 @@ public class Dijstra {
     private double[] D;
     private boolean[][] P;
     private boolean[] f;
+    private List<Integer> pathList = new ArrayList<Integer>();
 
     public void runDijstra() {
         for (int v = 0; v < vertexList.size(); v++) {
@@ -45,9 +49,6 @@ public class Dijstra {
                 }
             }
         }
-//        for (int i = 0; i < vertexList.size(); i++) {
-//            System.out.println(D[i]);
-//        }
     }
 
     public List<String> getSortestPath() {
@@ -64,6 +65,7 @@ public class Dijstra {
             stringList.add(vertexList.get(numEnd).getName());
             numEnd = pathMatrix[0][numEnd];
         }
+        pathList.add(0);
         stringList.add(vertexList.get(0).getName());
         Collections.reverse(stringList);
         System.out.println(stringList);
